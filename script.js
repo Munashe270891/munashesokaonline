@@ -1,33 +1,16 @@
-const slides = document.querySelectorAll('.carousel-card');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const menuToggle = document.querySelector('.menu-toggle');
-const siteNav = document.querySelector('.site-nav');
-let activeIndex = 0;
-
-function updateCarousel(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === index);
+fetch('books.json')
+  .then(response => response.json())
+  .then(data => {
+    const library = document.getElementById('book-grid'); // Make sure your HTML has an id="book-grid"
+    data.forEach(book => {
+      const card = `
+        <div class="book-card">
+          <img src="${book.image}" alt="${book.title}">
+          <h3>${book.title}</h3>
+          <p>${book.description}</p>
+          <a href="${book.link}" class="btn" target="_blank">Download Book</a>
+        </div>
+      `;
+      library.innerHTML += card;
+    });
   });
-}
-
-function showNext() {
-  activeIndex = (activeIndex + 1) % slides.length;
-  updateCarousel(activeIndex);
-}
-
-function showPrev() {
-  activeIndex = (activeIndex - 1 + slides.length) % slides.length;
-  updateCarousel(activeIndex);
-}
-
-nextBtn.addEventListener('click', showNext);
-prevBtn.addEventListener('click', showPrev);
-
-setInterval(showNext, 7000);
-
-menuToggle.addEventListener('click', () => {
-  siteNav.classList.toggle('open');
-});
-
-updateCarousel(activeIndex);
