@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Mobile menu toggle functionality
+  const menuToggle = document.querySelector('.menu-toggle');
+  const siteNav = document.querySelector('.site-nav');
+  
+  if (menuToggle) {
+    menuToggle.addEventListener('click', function() {
+      siteNav.classList.toggle('active');
+    });
+
+    // Close menu when a link is clicked
+    const navLinks = siteNav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        siteNav.classList.remove('active');
+      });
+    });
+  }
+
   // Array of featured book titles
   const featuredTitles = [
     'Faith Meets Financial Manipulation',
