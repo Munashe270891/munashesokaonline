@@ -5,8 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     'Faith Doesn\'t Move God'
   ];
 
-  // Fetch books data from relative path
-  fetch('./books.json')
+  // Get the base path for GitHub Pages
+  const basePath = window.location.pathname.includes('/munashesokaonline/') 
+    ? '/munashesokaonline/' 
+    : '/';
+  
+  // Fetch books data with correct path
+  fetch(basePath + 'books.json')
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -44,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
       errorMsg.textContent = 'Unable to load books. Please try again later.';
       errorMsg.style.color = '#d32f2f';
       errorMsg.style.textAlign = 'center';
+      errorMsg.style.padding = '20px';
       const library = document.getElementById('book-grid');
       if (library) library.parentElement.insertBefore(errorMsg, library);
     });
@@ -57,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const imgContainer = document.createElement('div');
     imgContainer.className = 'card-image-container';
     
-    // Create and append image
+    // Create and append image with correct path
     const img = document.createElement('img');
-    img.src = book.image;
+    img.src = basePath + book.image;
     img.alt = book.title;
     img.loading = 'lazy';
     imgContainer.appendChild(img);
